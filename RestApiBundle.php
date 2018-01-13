@@ -6,7 +6,7 @@
  * Time: 1:37
  */
 
-namespace RestApiBundle;
+namespace Wdtfoxs\RestApiBundle;
 
 use \Symfony\Component\HttpKernel\Bundle\Bundle;
 

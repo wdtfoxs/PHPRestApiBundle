@@ -6,11 +6,11 @@
  * Time: 0:51
  */
 
-namespace RestApiBundle\Controller;
+namespace Wdtfoxs\RestApiBundle\Controller;
 
 use JMS\Serializer\SerializerInterface;
-use RestApiBundle\Interfaces\RestApiService;
-use RestApiBundle\Utils\ServiceFinder;
+use Wdtfoxs\RestApiBundle\Interfaces\RestApiService;
+use Wdtfoxs\RestApiBundle\Utils\ServiceFinder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

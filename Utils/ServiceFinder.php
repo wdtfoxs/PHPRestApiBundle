@@ -6,7 +6,7 @@
  * Time: 0:55
  */
 
-namespace RestApiBundle\Utils;
+namespace Wdtfoxs\RestApiBundle\Utils;
 
 use zpt\anno\Annotations;
 

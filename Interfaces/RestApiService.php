@@ -6,7 +6,7 @@
  * Time: 1:02
  */
 
-namespace RestApiBundle\Interfaces;
+namespace Wdtfoxs\RestApiBundle\Interfaces;
 
 interface RestApiService
 {
