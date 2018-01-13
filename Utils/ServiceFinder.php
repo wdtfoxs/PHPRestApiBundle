@@ -58,7 +58,7 @@ class ServiceFinder
             if ($classAnnotations->isAnnotatedWith(self::ANNOTATION_NAME)) {
                 $urlPath = $classAnnotations->asArray()[self::ANNOTATION_NAME]['path'];
                 if ($urlPath === $entity) {
-                    if ($class->implementsInterface('RestApiBundle\RestApiService')) {
+                    if ($class->implementsInterface('RestApiBundle\Interfaces\RestApiService')) {
                         $fullClassName = $className;
                         break;
                     }
