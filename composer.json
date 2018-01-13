@@ -1,0 +1,31 @@
+{
+  "name" : "wdtfoxs/RestApiBundle",
+  "description" : "RestApiBundle for exam",
+  "version" : "1.0.0",
+  "type" : "symfony-bundle",
+  "homepage": "https://github.com/wdtfoxs/PHPRestApiBundle",
+  "license" : "MIT",
+  "keywords" : ["page", "page bundle"],
+  "authors" : [{
+    "name" : "Nikita Prozorov",
+    "email" : "wdtfoxs@gmail.com"
+  }],
+  "require" : {
+    "php": "^7.1.3",
+    "symfony/symfony": "3.4.*",
+    "jms/serializer-bundle": "^2.3",
+    "netresearch/jsonmapper": "^1.4",
+    "zeptech/annotations": "^1.1"
+  },
+  "suggest": {
+    "egeloen/ckeditor-bundle": "Allow use ckeditor field"
+  },
+  "autoload" : {
+    "psr-4" : { "RestApiBundle\\" : "" }
+  },
+  "extra" : {
+    "branch-alias" : {
+      "dev-master" : "1.0.x-dev"
+    }
+  }
+}
