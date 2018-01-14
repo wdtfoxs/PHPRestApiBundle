@@ -6,7 +6,7 @@
  * Time: 0:51
  */
 
-namespace RestApiBundle\Controllers;
+namespace RestApiBundle\Controller;
 
 use JMS\Serializer\SerializerInterface;
 use RestApiBundle\Interfaces\RestApiService;
