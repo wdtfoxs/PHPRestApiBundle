@@ -17,8 +17,6 @@ interface RestApiService
 
     function find($id);
 
-    function deleteAll();
-
     function delete($id);
 
     function update($id, $object);

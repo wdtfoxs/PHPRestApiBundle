@@ -51,29 +51,20 @@ class ServiceFinder
                 }
             }
             $className = $namespace . '\\' . $class;
-            $needToSkip = $this->checkServicePath($className, $entity);
-            if ($needToSkip) {
-                $fullClassName = $className;
-                break;
+            $class = new \ReflectionClass($className);
+            $annotation = 'entityrestapi';
+            $classAnnotations = new Annotations($class);
+            if ($classAnnotations->isAnnotatedWith('EntityRestApi')) {
+                $urlPath = $classAnnotations->asArray()[$annotation]['path'];
+                if ($urlPath === $entity) {
+                    if ($class->implementsInterface('RestApiBundle\Interfaces\RestApiService'))
+                        $fullClassName = $className;
+                }
             }
         }
         if (is_null($fullClassName)) {
             throw new \InvalidArgumentException();
         }
         return ltrim($fullClassName, '\\');
-    }
-
-    private function checkServicePath(string $fullClassName, string $entity): bool
-    {
-        $class = new \ReflectionClass($fullClassName);
-        $annotation = 'entityrestapi';
-        $classAnnotations = new Annotations($class);
-        if ($classAnnotations->isAnnotatedWith('EntityRestApi')) {
-            $urlPath = $classAnnotations->asArray()[$annotation]['path'];
-            if ($urlPath === $entity) {
-                return $class->implementsInterface('RestApiBundle\Interfaces\RestApiService');
-            }
-        }
-        return false;
     }
 }
