@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RestController extends Controller implements RestApiService
+class RestController extends Controller
 {
     private $serviceFinder;
     private $serializer;
@@ -30,30 +30,65 @@ class RestController extends Controller implements RestApiService
         $this->serializer = $serializer;
     }
 
-    function findAll()
+    function findAll(string $entity)
     {
-        // TODO: Implement findAll() method.
+        $restService = $this->get($this->serviceFinder->findServicePath($entity));
+        $encoded = $this->serializer->serialize($restService->findAll(), 'json');
+        return new Response($encoded, 200, array('Content-Type' => 'application/json'));
     }
 
-    function find($id)
+    public function find(string $entity, $id)
     {
-        // TODO: Implement find() method.
+        $restService = $this->get($this->serviceFinder->findServicePath($entity));
+        $encoded = $this->serializer->serialize($restService->find($id), 'json');
+        return new Response($encoded, 200, array('Content-Type' => 'application/json'));
     }
 
-    function delete($id)
+
+    public function delete(string $entity, $id)
     {
-        // TODO: Implement delete() method.
+        $restService = $this->get($this->serviceFinder->findServicePath($entity));
+        try {
+            $restService->delete($id);
+            return new Response(null, 200, array('Content-Type' => 'application/json'));
+        } catch (\Exception $e) {
+            return new Response('Something went wrong', 400, array('Content-Type' => 'application/json'));
+        }
     }
 
-    function update($id, $object)
+
+    public function update(string $entity, $id, Request $request)
     {
-        // TODO: Implement update() method.
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = $request->getContent();
+            $restService = $this->get($this->serviceFinder->findServicePath($entity));
+            try {
+                $restService->update($id, $data);
+                return new Response(null, 201);
+            } catch (\Exception $e) {
+                return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
+            }
+        } else {
+            return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
+        }
     }
 
-    function save($object)
-    {
-        // TODO: Implement save() method.
-    }
 
+    public function save(string $entity, Request $request)
+    {
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = $request->getContent();
+            //$request->request->replace(is_array($data) ? $data : []);
+            $restService = $this->get($this->serviceFinder->findServicePath($entity));
+            try {
+                $restService->save($data);
+                return new Response("{OK}", 201,array('Content-Type' => 'application/json'));
+            } catch (\Exception $e) {
+                return new Response('{Invalid request}', 400, array('Content-Type' => 'application/json'));
+            }
+        } else {
+            return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
+        }
+    }
 
 }
