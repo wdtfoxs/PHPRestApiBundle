@@ -6,13 +6,18 @@
  * Time: 1:02
  */
 
+
 namespace RestApiBundle\Interfaces;
+
 
 interface RestApiService
 {
+
     function findAll();
 
     function find($id);
+
+    function deleteAll();
 
     function delete($id);
 

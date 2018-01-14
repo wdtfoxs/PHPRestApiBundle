@@ -8,6 +8,7 @@
 
 namespace RestApiBundle\Annotations;
 
+
 /**
  * @Annotation
  * @Target("CLASS")

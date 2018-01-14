@@ -12,8 +12,6 @@ use zpt\anno\Annotations;
 
 class ServiceFinder
 {
-
-    const ANNOTATION_NAME = 'EntityRestApi';
     private $servicesPath;
 
     public function __construct(string $servicesPath)
@@ -21,7 +19,7 @@ class ServiceFinder
         $this->servicesPath = $servicesPath;
     }
 
-    public function findServicePath($entity) :string
+    public function findService($entity) :string
     {
         $fullClassName = null;
         foreach (glob($this->servicesPath . '/*.*') as $file) {
@@ -53,22 +51,29 @@ class ServiceFinder
                 }
             }
             $className = $namespace . '\\' . $class;
-            $class = new \ReflectionClass($className);
-            $classAnnotations = new Annotations($class);
-            if ($classAnnotations->isAnnotatedWith(self::ANNOTATION_NAME)) {
-                $urlPath = $classAnnotations->asArray()[self::ANNOTATION_NAME]['path'];
-                if ($urlPath === $entity) {
-                    if ($class->implementsInterface('RestApiBundle\Interfaces\RestApiService')) {
-                        $fullClassName = $className;
-                        break;
-                    }
-                }
+            $needToSkip = $this->checkServicePath($className, $entity);
+            if ($needToSkip) {
+                $fullClassName = $className;
+                break;
             }
-
         }
         if (is_null($fullClassName)) {
             throw new \InvalidArgumentException();
         }
         return ltrim($fullClassName, '\\');
+    }
+
+    private function checkServicePath(string $fullClassName, string $entity): bool
+    {
+        $class = new \ReflectionClass($fullClassName);
+        $annotation = 'entityrestapi';
+        $classAnnotations = new Annotations($class);
+        if ($classAnnotations->isAnnotatedWith('EntityRestApi')) {
+            $urlPath = $classAnnotations->asArray()[$annotation]['path'];
+            if ($urlPath === $entity) {
+                return $class->implementsInterface('RestApiBundle\Interfaces\RestApiService');
+            }
+        }
+        return false;
     }
 }
