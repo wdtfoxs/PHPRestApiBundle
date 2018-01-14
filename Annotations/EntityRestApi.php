@@ -6,7 +6,7 @@
  * Time: 0:46
  */
 
-namespace Wdtfoxs\RestApiBundle\Annotations;
+namespace RestApiBundle\Annotations;
 
 /**
  * @Annotation
