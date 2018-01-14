@@ -20,7 +20,7 @@
     "egeloen/ckeditor-bundle": "Allow use ckeditor field"
   },
   "autoload" : {
-    "psr-4" : { "Birthright\\SuperRestBundle\\" : "" }
+    "psr-4" : { "RestApiBundle\\" : "" }
   },
   "extra" : {
     "branch-alias" : {
